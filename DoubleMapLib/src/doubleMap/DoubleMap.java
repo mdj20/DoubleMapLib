@@ -1,5 +1,6 @@
 package doubleMap;
 
+import java.util.Collection;
 import java.util.NavigableMap;
 import java.util.NavigableSet;
 import java.util.Set;
@@ -12,4 +13,6 @@ public interface DoubleMap<K extends Comparable<K>, V> {
 	public V remove(K k1, K k2);
 	public NavigableMap<DoubleIndex<K>,V> getXValues(K x);
 	public NavigableMap<DoubleIndex<K>,V> getYValues(K y);
+	public Collection<V> getX(K x);
+	public Collection<V> getY(K y);
 }

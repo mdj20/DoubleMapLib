@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.NavigableMap;
 import java.util.NavigableSet;
 import java.util.Set;
+import java.util.SortedMap;
 import java.util.TreeMap;
 
 public class AbstractDoubleMap<K extends Comparable<K>, V> implements DoubleMap<K, V> {
@@ -16,7 +17,7 @@ public class AbstractDoubleMap<K extends Comparable<K>, V> implements DoubleMap<
 	private TreeMap<K,Integer> ySizes;
 	private DoubleIndex<K> tempKey = null;
 	
-	AbstractDoubleMap(){
+	public AbstractDoubleMap(){
 		xMap = new TreeMap<DoubleIndex<K>,V>();
 		yMap = new TreeMap<DoubleIndex<K>,V>(new DoubleIndex.InverseDoubleIndexComparator<K>());
 		xSizes = new TreeMap<K,Integer>();
@@ -29,7 +30,7 @@ public class AbstractDoubleMap<K extends Comparable<K>, V> implements DoubleMap<
 		DoubleIndex<K> key = new DoubleIndex<K>(k1,k2);
 		xMap.put(key,v);
 		ret = yMap.put(key, v);
-		if (ret != null) {
+		if (ret == null) {
 			xSizeIncrement(k1);
 			ySizeIncrement(k2);
 		}
@@ -132,14 +133,50 @@ public class AbstractDoubleMap<K extends Comparable<K>, V> implements DoubleMap<
 	}
 
 	@Override
-	public NavigableMap<K, V> getXValues(K x) {
+	public NavigableMap<DoubleIndex<K>, V> getXValues(K x) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public NavigableMap<K, V> getYValues(K y) {
+	public NavigableMap<DoubleIndex<K>, V> getYValues(K y) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public Collection<V> getX(K x) {
+		if(xSizes.get(x)==null) {
+			throw new IllegalArgumentException("No Objects at X( "+x+" )");
+		}
+		Collection<V> ret = null;
+		K yCeil, yFloor;
+		yCeil= ySizes.lastKey();
+		yFloor = ySizes.firstKey();
+		if (yCeil!=null && yFloor != null) {
+			DoubleIndex<K> floor = setTempIndex(x,yFloor);
+			DoubleIndex<K> ceil = new DoubleIndex<K>(x,yCeil);
+			SortedMap<DoubleIndex<K>, V> subMap = xMap.subMap(floor, ceil);
+			ret = subMap.values();
+		}
+		return ret;
+	}
+
+	@Override
+	public Collection<V> getY(K y) {
+		if(ySizes.get(y)==null) {
+			throw new IllegalArgumentException("No Objects at Y( "+y+" )");
+		}
+		Collection<V> ret = null;
+		K xCeil, xFloor;
+		xCeil= xSizes.lastKey();
+		xFloor = xSizes.firstKey();
+		if (xCeil!=null && xFloor != null) {
+			DoubleIndex<K> floor = setTempIndex(xFloor,y);
+			DoubleIndex<K> ceil = new DoubleIndex<K>(xCeil,y);
+			SortedMap<DoubleIndex<K>, V> subMap = yMap.subMap(floor, ceil);
+			ret = subMap.values();
+		}
+		return ret;
 	}
 }
