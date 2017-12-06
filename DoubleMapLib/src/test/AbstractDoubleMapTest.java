@@ -1,5 +1,8 @@
 package test;
 
+import java.util.HashSet;
+import java.util.Random;
+
 import doubleMap.AbstractDoubleMap;
 
 public class AbstractDoubleMapTest {
@@ -32,6 +35,27 @@ public class AbstractDoubleMapTest {
 			}
 			System.out.println();
 		}
+		
+		HashSet<Integer> removed = new HashSet<Integer>();
+		Random rando = new Random(System.nanoTime());
+		int count=0,limit=100;
+		while(count < limit) {
+			int index = rando.nextInt(xlimit*ylimit);
+			Integer value = map.remove(index/xlimit,index%ylimit);
+			if(value!=null) {
+				removed.add(value);
+				count++;
+			}
+		}
+		
+		for(Integer r : removed) {
+			System.out.println("TEST");
+			if(null!=map.get(r/xlimit, r%ylimit+1)) {
+				System.out.println("MISS");
+			}
+		}
+		
+		
 		
 	}
 }
