@@ -11,8 +11,6 @@ public interface DoubleMap<K extends Comparable<K>, V> {
 	public Set<K> keySet1();
 	public Set<K> keySet2();
 	public V remove(K k1, K k2);
-	public NavigableMap<DoubleIndex<K>,V> getXValues(K x);
-	public NavigableMap<DoubleIndex<K>,V> getYValues(K y);
 	public Collection<V> getX(K x);
 	public Collection<V> getY(K y);
 }

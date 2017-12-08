@@ -48,10 +48,12 @@ public class AbstractDoubleMapTest {
 			}
 		}
 		
+		int i = 0;
 		for(Integer r : removed) {
 			System.out.println("TEST");
-			if(null!=map.get(r/xlimit, r%ylimit+1)) {
-				System.out.println("MISS");
+			if(null!=map.get(r/xlimit, r%ylimit)) {
+				System.out.println("MISS "+i);
+				i++;
 			}
 		}
 		

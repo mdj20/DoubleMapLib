@@ -132,17 +132,6 @@ public class AbstractDoubleMap<K extends Comparable<K>, V> implements DoubleMap<
 		return ret;
 	}
 
-	@Override
-	public NavigableMap<DoubleIndex<K>, V> getXValues(K x) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public NavigableMap<DoubleIndex<K>, V> getYValues(K y) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public Collection<V> getX(K x) {
