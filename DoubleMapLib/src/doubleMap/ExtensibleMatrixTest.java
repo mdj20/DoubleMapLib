@@ -22,14 +22,23 @@ public class ExtensibleMatrixTest {
 	}
 	
 	
-	private void loadInts() {
+	private void loadInts(int x , int y){
 		int k = 0;
 		for(int i= 0; i < x ; i++) {
 			for (int j = 0 ; j<y; j++){		
 				em.put(i, j,  k++);
-
-				
 			}
 		}
 	}
+	
+	private void loadInts() { 
+		int k = 0;
+		for(int i= 0; i < x ; i++) {
+			for (int j = 0 ; j<y; j++){		
+				em.put(i, j,  k++);
+			}
+		}
+	}
+	
+	
 }
