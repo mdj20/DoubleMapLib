@@ -76,27 +76,43 @@ public class ExtensibleMatrixTest {
 		Set<Integer> removed = new HashSet<Integer>();
 		while (i<(x*y)) {
 			if(i%2==0) {
-				removed.add(testMatrix.get(i%x, i/y));
+				removed.add(testMatrix.remove(i%x, i/y));
 			}
+			i++;
 		}
-		System.out.println(removed.size());
+		i=0;
+		while (i<(x*y)) {
+			if(i%2==0) {
+				//Integer attempt = testMatrix.get(i%x,i/y);
+				//System.out.println(attempt);
+				assertTrue(testMatrix.get(i%x,i/y)==null);
+			}
+			else{
+				assertTrue(!removed.contains(testMatrix.get(i%x,i/y)));
+			}
+			i++;
+		}
+		
+		
+		//System.out.println(removed.size());
 		
 	}
 
 	@Test
 	public void testGetX() {
+		System.out.println("TEST GETX:");
 		int x=10,y=10;
 		ExtensibleMatrix<Integer> testMatrix = createTestEM(x,y);
-	/*	for(int i = 0 ; i < x ; i++){
+		for(int i = 0 ; i < x ; i++){
 			Collection<Integer> line = testMatrix.getX(i);
 			int j = 0;
 			for(Integer k:line){
-				System.out.print();
-				assertTrue(k==(j*x+i));
+				System.out.println(k+" "+(j*x+i));
+				//assertTrue(k==(j*x+i));
 				j++;
 			}
 		}
-		*/
+		fail();
 	}
 
 	@Test
@@ -109,6 +125,7 @@ public class ExtensibleMatrixTest {
 		for(int i = 0 ; i < y ; i++) {
 			for(int j = 0 ; j < x ; j++) {
 				ret.put(i,j,(i*x)+j);
+				//System.out.println((i*x)+j);
 			}
 		}
 		return ret;
