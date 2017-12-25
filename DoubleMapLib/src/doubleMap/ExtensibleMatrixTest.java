@@ -2,6 +2,7 @@ package doubleMap;
 
 import static org.junit.Assert.*;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -84,7 +85,18 @@ public class ExtensibleMatrixTest {
 
 	@Test
 	public void testGetX() {
-		fail("Not yet implemented");
+		int x=10,y=10;
+		ExtensibleMatrix<Integer> testMatrix = createTestEM(x,y);
+	/*	for(int i = 0 ; i < x ; i++){
+			Collection<Integer> line = testMatrix.getX(i);
+			int j = 0;
+			for(Integer k:line){
+				System.out.print();
+				assertTrue(k==(j*x+i));
+				j++;
+			}
+		}
+		*/
 	}
 
 	@Test
