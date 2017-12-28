@@ -145,7 +145,7 @@ public class AbstractDoubleMap<K extends Comparable<K>, V> implements DoubleMap<
 		if (yCeil!=null && yFloor != null) {
 			DoubleIndex<K> floor = setTempIndex(x,yFloor);
 			DoubleIndex<K> ceil = new DoubleIndex<K>(x,yCeil);
-			SortedMap<DoubleIndex<K>, V> subMap = xMap.subMap(floor, ceil);
+			SortedMap<DoubleIndex<K>, V> subMap = yMap.subMap(floor, ceil);
 			ret = subMap.values();
 		}
 		return ret;

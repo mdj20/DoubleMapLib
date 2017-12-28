@@ -108,11 +108,11 @@ public class ExtensibleMatrixTest {
 			int j = 0;
 			for(Integer k:line){
 				System.out.println(k+" "+(j*x+i));
-				//assertTrue(k==(j*x+i));
+				assertTrue(k==(j*x+i));
 				j++;
 			}
 		}
-		fail();
+		//fail();
 	}
 
 	@Test
