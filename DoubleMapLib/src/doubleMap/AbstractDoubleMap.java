@@ -3,6 +3,7 @@ package doubleMap;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.NavigableMap;
 import java.util.NavigableSet;
 import java.util.Set;
@@ -11,11 +12,11 @@ import java.util.TreeMap;
 
 public class AbstractDoubleMap<K extends Comparable<K>, V> implements DoubleMap<K, V> {
 	
-	private TreeMap<DoubleIndex<K>,V> xMap;
-	private TreeMap<DoubleIndex<K>,V> yMap;
-	private TreeMap<K,Integer> xSizes;
-	private TreeMap<K,Integer> ySizes;
-	private DoubleIndex<K> tempKey = null;
+	protected TreeMap<DoubleIndex<K>,V> xMap;
+	protected TreeMap<DoubleIndex<K>,V> yMap;
+	protected TreeMap<K,Integer> xSizes;
+	protected TreeMap<K,Integer> ySizes;
+	protected DoubleIndex<K> tempKey = null;
 	
 	public AbstractDoubleMap(){
 		xMap = new TreeMap<DoubleIndex<K>,V>();
@@ -145,7 +146,7 @@ public class AbstractDoubleMap<K extends Comparable<K>, V> implements DoubleMap<
 		if (yCeil!=null && yFloor != null) {
 			DoubleIndex<K> floor = setTempIndex(x,yFloor);
 			DoubleIndex<K> ceil = new DoubleIndex<K>(x,yCeil);
-			SortedMap<DoubleIndex<K>, V> subMap = yMap.subMap(floor, ceil);
+			SortedMap<DoubleIndex<K>, V> subMap = xMap.subMap(floor,true, ceil,true);
 			ret = subMap.values();
 		}
 		return ret;
@@ -168,4 +169,6 @@ public class AbstractDoubleMap<K extends Comparable<K>, V> implements DoubleMap<
 		}
 		return ret;
 	}
+
+
 }

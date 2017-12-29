@@ -1,6 +1,7 @@
 package doubleMap;
 
 import java.util.Collection;
+import java.util.Map;
 import java.util.NavigableMap;
 import java.util.NavigableSet;
 import java.util.Set;
