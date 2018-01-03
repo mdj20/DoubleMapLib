@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.NavigableMap;
 import java.util.Set;
 
 import org.junit.Test;
@@ -119,7 +120,6 @@ public class ExtensibleMatrixTest {
 		}
 		
 		HashSet<Integer> removed = new HashSet<Integer>(); 
-		
 		//remove some values
 		for(int i = 0; i < x ; i++) {
 			if(i%2==0) {
@@ -132,6 +132,31 @@ public class ExtensibleMatrixTest {
 		}
 		
 	}
+	
+	
+	@Test
+	public void testGetXMappedValues() {
+		int x=10,y=10;
+		ExtensibleMatrix<Integer> testMatrix = createTestEM(x,y);
+		for(int i = 0 ; i < x; i++){
+			NavigableMap<Integer,Integer> line = testMatrix.getXMappedValues(i);
+			for(Integer j:line.keySet()){
+				System.out.println(i+" "+j+" :"+(j+x*i)+" a:"+line.get(j));
+				assertTrue(line.get(j)==(j+x*i));
+				
+			}
+		}
+		
+		//fail("Not Implemented");
+	}
+	
+	@Test
+	public void testGetYMappedValues() {
+		
+		fail("Not Implemented");
+	}
+	
+
 
 	protected ExtensibleMatrix<Integer> createTestEM(int x, int y){
 		ExtensibleMatrix<Integer> ret = new ExtensibleMatrix<Integer>();
@@ -141,6 +166,10 @@ public class ExtensibleMatrixTest {
 			}
 		}
 		return ret;
+	}
+	
+	protected Integer mapValue(int x, int y, int xDim, int yDim){
+		return (y*xDim)+x;
 	}
 	
 }

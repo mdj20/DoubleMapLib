@@ -140,15 +140,8 @@ public class AbstractDoubleMap<K extends Comparable<K>, V> implements DoubleMap<
 			throw new IllegalArgumentException("No Objects at X( "+x+" )");
 		}
 		Collection<V> ret = null;
-		K yCeil, yFloor;
-		yCeil= ySizes.lastKey();
-		yFloor = ySizes.firstKey();
-		if (yCeil!=null && yFloor != null) {
-			DoubleIndex<K> floor = setTempIndex(x,yFloor);
-			DoubleIndex<K> ceil = new DoubleIndex<K>(x,yCeil);
-			SortedMap<DoubleIndex<K>, V> subMap = xMap.subMap(floor,true, ceil,true);
-			ret = subMap.values();
-		}
+		NavigableMap<K,V> map = this.getXMappedValues(x);
+		ret = map.values();
 		return ret;
 	}
 
@@ -158,17 +151,50 @@ public class AbstractDoubleMap<K extends Comparable<K>, V> implements DoubleMap<
 			throw new IllegalArgumentException("No Objects at Y( "+y+" )");
 		}
 		Collection<V> ret = null;
-		K xCeil, xFloor;
-		xCeil= xSizes.lastKey();
-		xFloor = xSizes.firstKey();
-		if (xCeil!=null && xFloor != null) {
-			DoubleIndex<K> floor = setTempIndex(xFloor,y);
-			DoubleIndex<K> ceil = new DoubleIndex<K>(xCeil,y);
-			SortedMap<DoubleIndex<K>, V> subMap = yMap.subMap(floor, ceil);
-			ret = subMap.values();
+		NavigableMap<K,V> map = this.getYMappedValues(y);
+		ret = map.values();
+		return ret;
+	}
+
+	@Override
+	public NavigableMap<K, V> getXMappedValues(K x) {
+		if(xSizes.get(x)==null) {
+			throw new IllegalArgumentException("No Objects at X( "+x+" )");
+		}
+		NavigableMap<K,V> ret = new TreeMap<K,V>();
+		K yCeil, yFloor;
+		yCeil= ySizes.lastKey();
+		yFloor = ySizes.firstKey();
+		if (yCeil!=null && yFloor != null) {
+			DoubleIndex<K> floor = setTempIndex(x,yFloor);
+			DoubleIndex<K> ceil = new DoubleIndex<K>(x,yCeil);
+			SortedMap<DoubleIndex<K>, V> subMap = xMap.subMap(floor,true, ceil,true);
+			for(DoubleIndex<K> di:subMap.keySet()){
+				ret.put(di.t2, subMap.get(di));
+			}
+	
 		}
 		return ret;
 	}
 
-
+	@Override
+	public NavigableMap<K, V> getYMappedValues(K y) {
+		if(ySizes.get(y)==null) {
+			throw new IllegalArgumentException("No Objects at Y( "+y+" )");
+		}
+		NavigableMap<K,V> ret = new TreeMap<K,V>();
+		K xCeil, xFloor;
+		xCeil= xSizes.lastKey();
+		xFloor = xSizes.firstKey();
+		if (xCeil!=null && xFloor != null) {
+			DoubleIndex<K> floor = setTempIndex(y,xFloor);
+			DoubleIndex<K> ceil = new DoubleIndex<K>(y,xCeil);
+			SortedMap<DoubleIndex<K>, V> subMap = yMap.subMap(floor,true, ceil,true);
+			for(DoubleIndex<K> di:subMap.keySet()){
+				ret.put(di.t1, subMap.get(di));
+			}
+	
+		}
+		return ret;
+	}
 }

@@ -14,4 +14,6 @@ public interface DoubleMap<K extends Comparable<K>, V> {
 	public V remove(K k1, K k2);
 	public Collection<V> getX(K x);
 	public Collection<V> getY(K y);
+	public NavigableMap<K,V> getXMappedValues(K x);
+	public NavigableMap<K,V> getYMappedValues(K y);
 }

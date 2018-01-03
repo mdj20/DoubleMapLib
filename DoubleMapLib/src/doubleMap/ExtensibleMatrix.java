@@ -1,6 +1,7 @@
 package doubleMap;
 
 import java.util.Map;
+import java.util.NavigableMap;
 import java.util.NavigableSet;
 import java.util.SortedSet;
 
@@ -12,9 +13,11 @@ public class ExtensibleMatrix<V> extends AbstractDoubleMap<Integer, V> implement
 			insertAllX(xIndex, entries);
 		}
 		else {
-			
-			SortedSet<Integer> tailSet = xSizes.tailMap(xIndex,true);
-			
+			NavigableMap<Integer, Integer> tailMap = xSizes.tailMap(xIndex,true);  //Map<xIndex,NUMBER_ENTRIES>
+			tailMap = tailMap.descendingMap();
+			for(Integer i:tailMap.keySet()){
+				//super.
+			}
 			
 		}
 	}
