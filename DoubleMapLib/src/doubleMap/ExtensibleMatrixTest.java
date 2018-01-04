@@ -17,7 +17,7 @@ public class ExtensibleMatrixTest {
 		ExtensibleMatrix<Integer> ret = createTestEM(x,y);
 		for (int i = 0 ; i<y ; i++) {
 			for (int j = 0 ; j<x ; j++) {
-				assertTrue(ret.get(i, j)==i*x+j);
+				assertTrue(ret.get(j, i)==mapValue(j,i,x,y));
 			}
 		}	
 	}
@@ -28,7 +28,7 @@ public class ExtensibleMatrixTest {
 		ExtensibleMatrix<Integer> ret = createTestEM(x,y);
 		for (int i = 0 ; i<y ; i++) {
 			for (int j = 0 ; j<x ; j++) {
-				assertTrue(ret.get(i, j)==i*x+j);
+				assertTrue(ret.get(j, i)==mapValue(j,i,x,y));
 			}
 		}
 	}
@@ -100,7 +100,7 @@ public class ExtensibleMatrixTest {
 			Collection<Integer> line = testMatrix.getX(i);
 			int j = 0;
 			for(Integer k:line){
-				assertTrue(k==(j+i*x));
+				assertTrue(k==mapValue(i,j,x,y));
 				j++;
 			}
 		}
@@ -114,7 +114,7 @@ public class ExtensibleMatrixTest {
 			Collection<Integer> line = testMatrix.getY(i);
 			int j = 0;
 			for(Integer k:line){
-				assertTrue(k==(j*y+i));
+				assertTrue(k==mapValue(j,i,x,y));
 				j++;
 			}
 		}
@@ -141,19 +141,21 @@ public class ExtensibleMatrixTest {
 		for(int i = 0 ; i < x; i++){
 			NavigableMap<Integer,Integer> line = testMatrix.getXMappedValues(i);
 			for(Integer j:line.keySet()){
-				System.out.println(i+" "+j+" :"+(j+x*i)+" a:"+line.get(j));
-				assertTrue(line.get(j)==(j+x*i));
-				
+				assertTrue(line.get(j)==mapValue(i,j,x,y));		
 			}
 		}
-		
-		//fail("Not Implemented");
 	}
 	
 	@Test
 	public void testGetYMappedValues() {
-		
-		fail("Not Implemented");
+		int x=10,y=10;
+		ExtensibleMatrix<Integer> testMatrix = createTestEM(x,y);
+		for(int i = 0 ; i < y; i++){
+			NavigableMap<Integer,Integer> line = testMatrix.getYMappedValues(i);
+			for(Integer j:line.keySet()){
+				assertTrue(line.get(j)==mapValue(j,i,x,y));		
+			}
+		}
 	}
 	
 
@@ -162,12 +164,14 @@ public class ExtensibleMatrixTest {
 		ExtensibleMatrix<Integer> ret = new ExtensibleMatrix<Integer>();
 		for(int i = 0 ; i < y ; i++) {
 			for(int j = 0 ; j < x ; j++) {
-				ret.put(i,j,(i*x)+j);
+				ret.put(j,i,mapValue(j,i,x,y));
 			}
 		}
 		return ret;
 	}
 	
+	
+	// this method produces consistent and unique testing values 
 	protected Integer mapValue(int x, int y, int xDim, int yDim){
 		return (y*xDim)+x;
 	}

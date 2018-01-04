@@ -187,8 +187,8 @@ public class AbstractDoubleMap<K extends Comparable<K>, V> implements DoubleMap<
 		xCeil= xSizes.lastKey();
 		xFloor = xSizes.firstKey();
 		if (xCeil!=null && xFloor != null) {
-			DoubleIndex<K> floor = setTempIndex(y,xFloor);
-			DoubleIndex<K> ceil = new DoubleIndex<K>(y,xCeil);
+			DoubleIndex<K> floor = setTempIndex(xFloor,y);
+			DoubleIndex<K> ceil = new DoubleIndex<K>(xCeil,y);
 			SortedMap<DoubleIndex<K>, V> subMap = yMap.subMap(floor,true, ceil,true);
 			for(DoubleIndex<K> di:subMap.keySet()){
 				ret.put(di.t1, subMap.get(di));
