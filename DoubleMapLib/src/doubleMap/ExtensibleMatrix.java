@@ -16,9 +16,12 @@ public class ExtensibleMatrix<V> extends AbstractDoubleMap<Integer, V> implement
 			NavigableMap<Integer, Integer> tailMap = xSizes.tailMap(xIndex,true);  //Map<xIndex,NUMBER_ENTRIES>
 			tailMap = tailMap.descendingMap();
 			for(Integer i:tailMap.keySet()){
-				//super.
+				NavigableMap<Integer,V> xLine = super.getXMappedValues(i);
+				for(Integer j:xLine.keySet()){
+					super.put(i+1,j,super.remove(i,j));
+				}
 			}
-			
+			insertAllX(xIndex,entries);
 		}
 	}
 	

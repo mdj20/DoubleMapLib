@@ -3,6 +3,7 @@ package doubleMap;
 import static org.junit.Assert.*;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.NavigableMap;
 import java.util.Set;
@@ -156,6 +157,28 @@ public class ExtensibleMatrixTest {
 				assertTrue(line.get(j)==mapValue(j,i,x,y));		
 			}
 		}
+	}
+	
+	@Test
+	public void testPutX(){
+		int x=10,y=10, xIndex = 3;
+		ExtensibleMatrix<Integer> testMatrix = createTestEM(x,y);
+		HashMap<Integer,Integer> values = new HashMap<Integer,Integer>();
+		for(int i = 0 ; i < y ; i++ ){ // set up the values
+			values.put(i, mapValue(xIndex,i,x,y));
+		}
+		// insert values
+		testMatrix.putX(xIndex, values);
+		//check values
+		for(int i = 0 ; i < x+1 ; i++){
+			for( int j = 0 ; j < y ; j++){
+				
+				int expectedXValue = (i<xIndex)?i:i-1;
+				
+				assertTrue(testMatrix.get(i, j) == mapValue(expectedXValue,j,x,y));
+			}
+		}
+		
 	}
 	
 
