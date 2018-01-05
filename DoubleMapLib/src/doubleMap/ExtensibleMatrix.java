@@ -16,7 +16,7 @@ public class ExtensibleMatrix<V> extends AbstractDoubleMap<Integer, V> implement
 		else {
 			NavigableMap<Integer, Integer> tailMap = xSizes.tailMap(xIndex,true);  //Map<xIndex,NUMBER_ENTRIES>
 			tailMap = tailMap.descendingMap();
-			TreeMap<Integer,Integer> decendingMap = new TreeMap<Integer,Integer>(tailMap);
+			TreeMap<Integer,Integer> decendingMap = new TreeMap<Integer,Integer>(tailMap); // Need to copy structure to avoid ConcurrentModificationException
 			for(Integer i:decendingMap.keySet()){
 				NavigableMap<Integer,V> xLine = super.getXMappedValues(i);
 				for(Integer j:xLine.keySet()){
@@ -36,10 +36,10 @@ public class ExtensibleMatrix<V> extends AbstractDoubleMap<Integer, V> implement
 		else {
 			NavigableMap<Integer, Integer> tailMap = ySizes.tailMap(yIndex,true);  //Map<xIndex,NUMBER_ENTRIES>
 			tailMap = tailMap.descendingMap();
-			TreeMap<Integer,Integer> decendingMap = new TreeMap<Integer,Integer>(tailMap);
+			TreeMap<Integer,Integer> decendingMap = new TreeMap<Integer,Integer>(tailMap);  // Need to copy structure to avoid ConcurrentModificationException
 			for(Integer i:decendingMap.keySet()){
 				NavigableMap<Integer,V> yLine = super.getYMappedValues(i);
-				for(Integer j:yLine.keySet()){
+				for(Integer j : yLine.keySet()){
 					super.put(j,i+1,super.remove(j,i));
 				}
 			}
