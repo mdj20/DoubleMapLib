@@ -172,15 +172,34 @@ public class ExtensibleMatrixTest {
 		//check values
 		for(int i = 0 ; i < x+1 ; i++){
 			for( int j = 0 ; j < y ; j++){
-				
-				int expectedXValue = (i<xIndex)?i:i-1;
-				
+				int expectedXValue = (i<=xIndex)?i:i-1;
+				System.out.println(i+" "+j+" "+expectedXValue+" "+mapValue(expectedXValue,j,x,y)+" "+testMatrix.get(i, j));
 				assertTrue(testMatrix.get(i, j) == mapValue(expectedXValue,j,x,y));
 			}
 		}
 		
 	}
-	
+
+	@Test
+	public void testPutY(){
+		int x=10,y=10, yIndex = 3;
+		ExtensibleMatrix<Integer> testMatrix = createTestEM(x,y);
+		HashMap<Integer,Integer> values = new HashMap<Integer,Integer>();
+		for(int i = 0 ; i < y ; i++ ){ // set up the values
+			values.put(i, mapValue(x,yIndex,x,y));
+		}
+		// insert values
+		testMatrix.putY(yIndex, values);
+		//check values
+		for(int i = 0 ; i < x+1 ; i++){
+			for( int j = 0 ; j < y ; j++){
+				int expectedYValue = (j<=yIndex)?j:j-1;
+				System.out.println(i+" "+j+" "+expectedYValue+" "+mapValue(i,expectedYValue,x,y)+" "+testMatrix.get(i, j));
+				assertTrue(testMatrix.get(i, j) == mapValue(i,expectedYValue,x,y));
+			}
+		}
+		
+	}
 
 
 	protected ExtensibleMatrix<Integer> createTestEM(int x, int y){
